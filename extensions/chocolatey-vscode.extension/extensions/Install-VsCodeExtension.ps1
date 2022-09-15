@@ -76,4 +76,5 @@ function Install-VsCodeExtension {
     InstallExtension $installLocationUserLevel $extensionId
     InstallExtension $installLocationInsidersSystemLevel $extensionId
     InstallExtension $installLocationInsidersUserLevel $extensionId
+    InstallExtension $installLocationPortalable $extensionId
 }
