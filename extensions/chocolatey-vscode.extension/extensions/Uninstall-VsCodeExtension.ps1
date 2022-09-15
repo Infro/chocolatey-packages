@@ -47,7 +47,9 @@ function Uninstall-VsCodeExtension {
     Write-Verbose "Locating Visual Studio Code Insiders build user level installation directory..."
     $installLocationInsidersUserLevel = Get-AppInstallLocation "Microsoft Visual Studio Code Insiders (User)" | Where-Object { Test-Path "$_\bin\code-insiders.cmd" } | Select-Object -first 1 | ForEach-Object { "$_\bin\code-insiders.cmd" }
 
-    if (!$installLocationSystemLevel -and !$installLocationUserLevel -and !$installLocationInsidersSystemLevel -and !$installLocationInsidersUserLevel) {
+    $installLocationPortalable = 'c:\tools\vscode'
+
+    if (!$installLocationSystemLevel -and !$installLocationUserLevel -and !$installLocationInsidersSystemLevel -and !$installLocationInsidersUserLevel -and !(Test-Path -Path $installLocationPortalable)) {
         Write-Error "Visual Studio Code installation directory was not found."
         throw "Visual Studio Code installation directory was not found."
     }
@@ -56,4 +58,5 @@ function Uninstall-VsCodeExtension {
     UninstallExtension $installLocationUserLevel $extensionId
     UninstallExtension $installLocationInsidersSystemLevel $extensionId
     UninstallExtension $installLocationInsidersUserLevel $extensionId
+    UninstallExtension $installLocationPortalable $extensionId
 }
